@@ -20,20 +20,20 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
     deleteThought(req, res) {
-        Thought.findOneAndRemove({ _id: req.params.studentId })
-        .then((student) =>
-            !student
-              ? res.status(404).json({ message: 'No such student exists' })
+        Thought.findOneAndRemove({ _id: ObjectId(req.params.id) })
+        .then((thought) =>
+            !thought
+              ? res.status(404).json({ message: 'Sorry, this thought could not be found' })
               : User.findOneAndUpdate(
                   { thoughts: req.params.studentId },
                   { $pull: { thought: req.params.studentId } },
                   { new: true }
                 )
           )
-          .then((course) =>
-            !course
+          .then((thought) =>
+            !thought
               ? res.status(404).json({
-                  message: 'Student deleted, but no courses found',
+                  message: 'Sorry, this thought could not be found',
                 })
               : res.json({ message: 'Student successfully deleted' })
           )
