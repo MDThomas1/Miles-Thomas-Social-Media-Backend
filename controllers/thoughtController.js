@@ -35,7 +35,7 @@ module.exports = {
               ? res.status(404).json({
                   message: 'Sorry, this thought could not be found',
                 })
-              : res.json({ message: 'Student successfully deleted' })
+              : res.json({ message: 'Thought has been successfully deleted' })
           )
         .catch((err) => {
             console.log(err);
@@ -48,7 +48,7 @@ module.exports = {
             { $set: req.body },
             { runValidators: true, new: true }
         )
-        .then((thought) => !user ? res.status(404).json({ message: 'Sorry, this thought could not be found!' }) : res.json(thought))
+        .then((thought) => !thought ? res.status(404).json({ message: 'Sorry, this thought could not be found!' }) : res.json(thought))
         .catch((err) => res.status(500).json(err));
     }    
 };
