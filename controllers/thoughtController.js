@@ -90,7 +90,7 @@ module.exports = {
             { $pull: { reactions: ObjectId(req.params.reactionId) } },
             { new: true }
         )
-        .then((thought) => !thought ? res.status(404).json({ message: 'No thought could be found with the provided ID' }) : res.json('Thought has been successfully deleted')
+        .then((thought) => !thought ? res.status(404).json({ message: 'No reaction could be found with the provided ID' }) : res.json('Reaction has been successfully deleted')
         )
         .catch((err) => {
             console.log(err);
