@@ -27,7 +27,7 @@ module.exports = {
     // Deletes a specified user and any thoughts within that user's array
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: ObjectId(req.params.userId) })
-        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json(user))
+        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json('User was successfully deleted'))
         .then(() => res.json({ message: 'User has been successfully deleted' }))
         .catch((err) => res.status(500).json(err));
     },
@@ -38,7 +38,7 @@ module.exports = {
             { $set: req.body },
             { runValidators: true, new: true }
         )
-        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json('User has been successfully deleted'))
+        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json(user))
         .catch((err) => res.status(500).json(err));
     },
     // Finds a user with a specified ID and adds them to another user's friend array
