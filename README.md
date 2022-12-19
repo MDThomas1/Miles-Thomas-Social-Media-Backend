@@ -10,7 +10,10 @@ A set of back-end routes using mongoose to set up a social media platform with u
 * [Link to Video](#Link-to-Video)
 
 ## Installation
-Since this application doesn't currently contain front-end information, the code will have to be downloaded and run through a program like Insomnia.
+Since this application doesn't currently contain front-end information, the code will have to be downloaded and run through a program like Insomnia. Additionally, once you first download the code, you'll need to run the following command to download the necessary packages.
+```bash
+npm i
+```
 
 ## Usage
 Once you have the code downloaded to your device, all you have to do is open a command line linked to it and enter the following command.
