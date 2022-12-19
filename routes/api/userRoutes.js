@@ -1,3 +1,4 @@
+// Importing all controllers from userController and giving them routes with names and classes
 const router = require('express').Router();
 const {
   getAllUsers,

@@ -1,3 +1,4 @@
+// Imprting all necessary files, packages and middleware to allow the server to run
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');

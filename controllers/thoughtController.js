@@ -1,12 +1,16 @@
+// Importing the models needed on the page as well as the ObjectId data type for use in parameters
 const { Thought, User } = require('../models')
 const { ObjectId } = require('mongoose').Types;
 
+// Automatically exporting all functions used in routing
 module.exports = {
+    // Fetches all thoughts
     getAllThoughts(req, res) {
         Thought.find()
         .then((thoughts) => res.json(thoughts))
         .catch((err) => res.status(500).json(err));
     },
+    // Fetches one thought through its ID
     getOneThought(req, res) {
         Thought.findOne({ _id: ObjectId(req.params.thoughtId) })
         .select('-__v')
@@ -14,6 +18,7 @@ module.exports = {
         !thought ? res.status(404).json({ message: 'Sorry, this thought could not be found' }) : res.json(thought))
         .catch((err) => res.status(500).json(err));
     },
+    // Creates a new thought and saves it to the user array with the matching username
     createNewThought(req, res) {
         Thought.create(req.body)
             .then((thought) => {
@@ -30,6 +35,7 @@ module.exports = {
             res.status(500).json(err);
         });
     },
+    // Delete a thought based on ID
     deleteThought(req, res) {
         Thought.findOneAndRemove({ _id: ObjectId(req.params.thoughtId) })
         .then((user) =>
@@ -53,6 +59,7 @@ module.exports = {
             res.status(500).json(err);
         });
     },
+    // Updates a thought based on ID
     updateThought(req, res) {
         Thought.findOneAndUpdate(
             { _id: ObjectId(req.params.thoughtId) },
@@ -62,6 +69,7 @@ module.exports = {
         .then((thought) => !thought ? res.status(404).json({ message: 'Sorry, this thought could not be found!' }) : res.json(thought))
         .catch((err) => res.status(500).json(err));
     },
+    // Adds a reaction to a selected thought
     createReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: ObjectId(req.params.thoughtId) },
@@ -75,6 +83,7 @@ module.exports = {
             res.status(500).json(err);
         });
     },
+    // Finds a reaction in a specified thought and deletes it
     deleteReaction(req, res) {
         Thought.findOneAndUpdate(
             { _id: ObjectId(req.params.thoughtId) },
