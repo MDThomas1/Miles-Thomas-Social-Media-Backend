@@ -8,7 +8,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
     getOneThought(req, res) {
-        Thought.findOne({ _id: ObjectId(req.params.id) })
+        Thought.findOne({ _id: ObjectId(req.params.thoughtId) })
         .select('-__v')
         .then((thought) =>
         !thought ? res.status(404).json({ message: 'Sorry, this thought could not be found' }) : res.json(thought))
@@ -31,13 +31,13 @@ module.exports = {
         });
     },
     deleteThought(req, res) {
-        Thought.findOneAndRemove({ _id: ObjectId(req.params.id) })
+        Thought.findOneAndRemove({ _id: ObjectId(req.params.thoughtId) })
         .then((user) =>
             !user
               ? res.status(404).json({ message: 'This thought could not be found within a user' })
               : User.findOneAndUpdate(
                   { thoughts: ObjectId(req.params.id) },
-                  { $pull: { thoughts: ObjectId(req.params.id) } },
+                  { $pull: { thoughts: ObjectId(req.params.thoughtId) } },
                   { new: true }
                 )
           )
@@ -55,7 +55,7 @@ module.exports = {
     },
     updateThought(req, res) {
         Thought.findOneAndUpdate(
-            { _id: ObjectId(req.params.id) },
+            { _id: ObjectId(req.params.thoughtId) },
             { $set: req.body },
             { runValidators: true, new: true }
         )
@@ -64,7 +64,7 @@ module.exports = {
     },
     createReaction(req, res) {
         Thought.findOneAndUpdate(
-            { _id: ObjectId(req.params.id) },
+            { _id: ObjectId(req.params.thoughtId) },
             { $addToSet: { reactions: req.body } },
             { new: true }
         )
@@ -77,8 +77,8 @@ module.exports = {
     },
     deleteReaction(req, res) {
         Thought.findOneAndRemove(
-            { reactions: ObjectId(req.params.id) },
-            { $pull: { thoughts: ObjectId(req.params.id) } },
+            { _id: ObjectId(req.params.thoughtId) },
+            { $pull: { thoughts: ObjectId(req.params.reactionId) } },
             { new: true }
         )
         .then((user) => !user ? res.status(404).json({ message: 'No user could be found with the provided username' }) : res.json('New thought has been successfully uploaded')
