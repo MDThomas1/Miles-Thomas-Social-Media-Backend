@@ -27,7 +27,7 @@ module.exports = {
     // Deletes a specified user and any thoughts within that user's array
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: ObjectId(req.params.userId) })
-        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : Thought.deleteMany({ _id: { $in: user.thoughts } }))
+        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json(user))
         .then(() => res.json({ message: 'User has been successfully deleted' }))
         .catch((err) => res.status(500).json(err));
     },
