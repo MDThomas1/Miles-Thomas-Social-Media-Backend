@@ -37,7 +37,7 @@ module.exports = {
     addFriend(req, res) {
         User.findOneAndUpdate(
             { _id: ObjectId(req.params.userId) },
-            { $addToSet: { friends: req.body } },
+            { $addToSet: User.findOne( { _id: ObjectId(req.params.friendId) } ) },
             { new: true }
         )
         .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json('New friend has been successfully added')
