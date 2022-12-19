@@ -20,7 +20,14 @@ const userSchema = new Schema({
         }
     },
     thoughts: [thoughtSchema],
-    friends: [userSchema]
+    friends: {
+        type: [
+            {
+              type: Schema.Types.ObjectId,
+              ref: 'user'
+            },
+        ],
+    }
 });
 
 // Adds a virtual to count the number of friends a user has
