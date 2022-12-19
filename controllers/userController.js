@@ -38,7 +38,7 @@ module.exports = {
             { $set: req.body },
             { runValidators: true, new: true }
         )
-        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json(user))
+        .then((user) => !user ? res.status(404).json({ message: 'Sorry, this user could not be found!' }) : res.json('User has been successfully deleted'))
         .catch((err) => res.status(500).json(err));
     },
     // Finds a user with a specified ID and adds them to another user's friend array
