@@ -76,12 +76,12 @@ module.exports = {
         });
     },
     deleteReaction(req, res) {
-        Thought.findOneAndRemove(
+        Thought.findOneAndUpdate(
             { _id: ObjectId(req.params.thoughtId) },
-            { $pull: { thoughts: ObjectId(req.params.reactionId) } },
+            { $pull: { reactions: ObjectId(req.params.reactionId) } },
             { new: true }
         )
-        .then((user) => !user ? res.status(404).json({ message: 'No user could be found with the provided username' }) : res.json('New thought has been successfully uploaded')
+        .then((thought) => !thought ? res.status(404).json({ message: 'No thought could be found with the provided ID' }) : res.json('Thought has been successfully deleted')
         )
         .catch((err) => {
             console.log(err);
